@@ -6,6 +6,7 @@
 - MODE=live：两个审阅模型会**同时**发起请求（同一个上游地址 + 同一个密钥，只有模型 ID 不同）。可先用 `npm run probe -- "要审阅的原文"` 验证通道，答案会同时写到 `data/model-outputs/`。失败不会回退到 demo。
 - 思考档与超时要分开配：不同模型接受的最低档不同（有的在 `minimal` 下会挂死，有的显式传档直接 400），用 `MODEL_A_REASONING_EFFORT` / `MODEL_B_REASONING_EFFORT` 分别指定；中转不流式返回时，把 `MODEL_REQUEST_TIMEOUT_MS` 调高（默认 20s），否则需要思考的命题会被误判超时。
 - 每个任务的完整报告（含两份模型判断与理由）落在 `data/<job_id>.json`；`data/model-outputs/` 只存 probe 的问答记录。
+- 现场演示建议配 `MODEL_A_FALLBACK` / `MODEL_B_FALLBACK`：同一条问题上主通道是间歇性的（实测同一模型有的问题 4s 回来、有的挂到超时），主通道整条失败时自动换备选，报告里 `requested_model` 记配置值、`returned_model` 记真正作答的模型，不冒充。
 - 实际存证另需 CHAIN_ENABLED=true、ISSUER_PRIVATE_KEY 和 deployment.json。浏览器没有私钥，只读 RPC。
 - 手机使用同 Wi-Fi 下的电脑IP:3001，服务设 HOST=0.0.0.0；PUBLIC_ORIGIN 可填局域网入口。浏览器模拟尺寸检查不代表真实手机联网已验证。
 

@@ -118,6 +118,29 @@
           <p class="trust-note">信任边界：核验以本页配置的链 ID、合约及提交地址为预期值，并依赖你选择的 RPC。匹配只证明报告与存证记录相符，不证明内容真实、真实模型调用发生或模型厂商签署。测试网代币无真实营收含义。</p>
         </div>
       </section>
+      <section id="live" class="live-section">
+        <div class="section-heading">
+          <div>
+            <div class="eyebrow">04 / Live</div>
+            <h2>想让它当场跑一次？</h2>
+          </div>
+          <span class="replay-label">公开站是静态托管 · 实时调用需要本机服务</span>
+        </div>
+        <div class="live-body">
+          <div class="live-copy">
+            <p>这一页在 GitHub Pages 上，只有静态文件：拿不到模型密钥，也没有服务端。所以这里不放输入框——放了也只能是个假按钮，点了什么都不会发生。</p>
+            <p>要是想真的输入一句话，让两个模型同时回答并当场签发凭证，就在本机仓库根目录起服务：</p>
+            <pre class="code-block"><code>npm ci
+CHAIN_ENABLED=true ISSUER_PRIVATE_KEY=… npm start</code></pre>
+            <p class="live-note">服务起来后，提交页会写明当前是真实双模型模式；报告生成后可在 cert 页直接读 RPC 核对。</p>
+          </div>
+          <div class="live-cta">
+            <a id="localSubmitLink" class="button" href="http://127.0.0.1:3001/submit.html">打开本地提交页 ↗</a>
+            <p id="localState" class="local-state">正在检测本机服务…</p>
+          </div>
+        </div>
+      </section>
+
       <section class="share-section">
         <div>
           <div class="eyebrow">Show the receipt</div>
@@ -152,6 +175,22 @@
       element.classList.add('rv');
       io.observe(element);
     }
+  })();
+  </script>
+  <script>
+  // 把"本机服务是否在跑"如实说出来：公开站自己调不了模型，
+  // 但观众/评委不该点了一个按钮才发现连不上。
+  (() => {
+    const state = document.getElementById('localState');
+    const link = document.getElementById('localSubmitLink');
+    if (!state || !link) return;
+    const up = () => { state.textContent = '已检测到本机服务正在运行'; state.className = 'local-state is-up'; };
+    const down = () => { state.textContent = '本机未检测到服务（先按上面命令启动，再点）'; state.className = 'local-state is-down'; };
+    const probe = new AbortController();
+    const timer = setTimeout(() => probe.abort(), 2500);
+    fetch('http://127.0.0.1:3001/api/health', { mode: 'no-cors', cache: 'no-store', signal: probe.signal })
+      .then(() => up(), () => down())
+      .finally(() => clearTimeout(timer));
   })();
   </script>
 </body>

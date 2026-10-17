@@ -512,6 +512,32 @@ textarea:focus{border-color:var(--hair-3);outline:none}
 }
 
 /* ---------------------------------------------------------------- share */
+/* ----------------------------------------------------------------- live */
+.live-section{border-top:1px solid var(--hair);padding:64px 0 8px}
+.live-body{display:flex;align-items:flex-start;justify-content:space-between;gap:56px;margin-bottom:52px}
+.live-copy{max-width:46em}
+.live-copy p{margin:0 0 14px;font-size:14.5px;line-height:1.75;color:var(--ink-2)}
+.live-copy p.live-note{margin-bottom:0;font-size:13px;color:var(--ink-3)}
+.code-block{
+  margin:0 0 16px;padding:15px 18px;border:1px solid var(--hair);border-radius:6px;
+  background:var(--sunken);overflow-x:auto;
+}
+.code-block code{
+  font-family:var(--mono);font-size:12.5px;line-height:1.8;color:var(--ink);
+  white-space:pre;letter-spacing:.01em;
+}
+.live-cta{
+  flex-shrink:0;width:286px;padding:24px 20px 20px;border:1px solid var(--hair);
+  border-radius:6px;background:var(--panel);
+}
+.live-cta .button{display:block;width:100%;text-align:center}
+.local-state{
+  margin:14px 0 0;font-family:var(--mono);font-size:11px;letter-spacing:.03em;
+  line-height:1.7;color:var(--ink-4);text-align:center;
+}
+.local-state.is-up{color:var(--pass)}
+.local-state.is-down{color:var(--warn)}
+
 .share-section{
   display:flex;align-items:center;justify-content:space-between;gap:60px;
   margin:0;padding:64px 0;
@@ -649,6 +675,11 @@ section{scroll-margin-top:60px}
   .quiet-button{display:block;margin-top:12px}
   .share-section{display:block;padding:48px 0}
   .share-section h2{font-size:27px}
+  .live-section{padding:48px 0 4px}
+  .live-body{display:block;margin-bottom:40px}
+  .live-cta{width:100%;margin-top:24px}
+  .code-block{padding:13px 14px}
+  .code-block code{font-size:11.5px}
   .share-box{width:100%;margin-top:32px;text-align:left;padding:18px}
   .share-box canvas{margin:0 0 14px}
   .share-box a{max-width:300px}
