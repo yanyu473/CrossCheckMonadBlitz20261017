@@ -34,7 +34,7 @@
         <span class="brand-mark" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"><path d="M12 2.6 21.4 12 12 21.4 2.6 12Z"/><path d="M12 8 16 12l-4 4-4-4Z" fill="currentColor" stroke="none" opacity=".5"/></svg></span>
         CrossCheck
       </a>
-      <nav><a href="#evidence">链上证据</a><a href="#verify">独立核验</a><a id="sourceLink" href="./about.html">源码与说明 ↗</a></nav>
+      <nav><a href="#evidence">链上证据</a><a href="#verify">独立核验</a><a id="localNavLink" class="nav-live" href="http://127.0.0.1:3001/submit.html" title="需要先在本机启动 Node 服务，见 04 / Live">实时调用 ↗</a><a id="sourceLink" href="./about.html">源码与说明 ↗</a></nav>
     </header>
     <main>
       <section class="hero">
@@ -183,9 +183,14 @@ CHAIN_ENABLED=true ISSUER_PRIVATE_KEY=… npm start</code></pre>
   (() => {
     const state = document.getElementById('localState');
     const link = document.getElementById('localSubmitLink');
+    const navLink = document.getElementById('localNavLink');
     if (!state || !link) return;
     const up = () => { state.textContent = '已检测到本机服务正在运行'; state.className = 'local-state is-up'; };
-    const down = () => { state.textContent = '本机未检测到服务（先按上面命令启动，再点）'; state.className = 'local-state is-down'; };
+    const down = () => {
+      state.textContent = '本机未检测到服务（先按上面命令启动，再点）'; state.className = 'local-state is-down';
+      // 没起服务时把导航项压暗并说明原因，别让人点了才发现连不上。
+      if (navLink) { navLink.classList.add('is-down'); navLink.title = '本机未运行 Node 服务，此链接目前打不开'; }
+    };
     const probe = new AbortController();
     const timer = setTimeout(() => probe.abort(), 2500);
     fetch('http://127.0.0.1:3001/api/health', { mode: 'no-cors', cache: 'no-store', signal: probe.signal })
