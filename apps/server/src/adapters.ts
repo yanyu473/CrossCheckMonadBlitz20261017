@@ -541,7 +541,14 @@ function upstreamAdapter(slot: ModelSlot, config: UpstreamConfig, timeout: numbe
             for (let tryIndex = 0; tryIndex < retryDelays.length + 1; tryIndex += 1) {
               let reply: UpstreamReply;
               try {
-                reply = await postJson(endpointFor(baseUrl, route), step.body, apiKey, controller.signal, config.http_proxy, requestTimeout);
+                /*
+                 * A constrained attempt gets a much shorter window than a plain one.
+                 * When the relay stalls on `response_format` it never recovers, so
+                 * waiting the full budget only delays the fallback that will work —
+                 * one measured run spent 78 s this way before answering in 12 s.
+                 */
+                const stepTimeout = step.body.response_format ? Math.min(requestTimeout, 12_000) : requestTimeout;
+                reply = await postJson(endpointFor(baseUrl, route), step.body, apiKey, controller.signal, config.http_proxy, stepTimeout);
               } catch (error) {
                 if (controller.signal.aborted) throw error;
                 // Connection reset, TLS failure, or no answer at all: retry once, then treat the channel as down.

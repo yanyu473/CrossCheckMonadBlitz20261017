@@ -200,8 +200,8 @@ h1 .h1-key{color:var(--ink)}
 }
 .receipt-slot:last-child .slot-badge{border-color:var(--b-line);background:var(--b-fill);color:var(--b)}
 .slot-verdict{font-size:19px;font-weight:650;letter-spacing:-.02em;line-height:1.2}
-.receipt-slot:first-child .slot-verdict{color:var(--pass)}
-.receipt-slot:last-child .slot-verdict{color:var(--warn)}
+.receipt-slot:first-child .slot-verdict{color:var(--warn)}
+.receipt-slot:last-child .slot-verdict{color:var(--fail)}
 
 .receipt-row{
   display:flex;align-items:center;justify-content:space-between;gap:14px;
