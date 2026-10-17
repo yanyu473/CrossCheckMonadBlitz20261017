@@ -3,7 +3,7 @@ import { EventEmitter } from 'node:events';
 import { assertValidUnicode, canonicalizeJson, deriveAgreement, hashContent, hashPayload,
   modelResultSchema, validateReportEnvelope, type AnchorInput, type CertificateRecord, type ChainProof,
   type JobStatus, type JobView, type ModelResult, type ReportPayload } from '@crosscheck/protocol';
-import { createModelAdapters, RULE_PROMPT, type ModelAdapter } from './adapters.js';
+import { createModelAdapters, modelsConfigured, RULE_PROMPT, type ModelAdapter } from './adapters.js';
 import { AppError, safeChainCode, type ChainGateway } from './chain.js';
 import type { ServerConfig } from './config.js';
 import { JobStore, type StoredEvent, type StoredJob } from './store.js';
@@ -305,7 +305,7 @@ export class JobService {
   health() {
     return { status: this.storageFailed ? 'degraded' : 'ok', mode: this.config.mode,
       storage_ready: !this.storageFailed, active_jobs: this.tasks.size, queued_jobs: this.queue.length,
-      models_ready: this.config.mode === 'demo' || !!(this.config.models.openai?.api_key && this.config.models.openai?.model &&
+      models_ready: this.config.mode === 'demo' || modelsConfigured(this.config.models) || !!(this.config.models.openai?.api_key && this.config.models.openai?.model &&
         this.config.models.anthropic?.api_key && this.config.models.anthropic?.model),
       chain_ready: this.chain.configured, chain_recovery_ready: this.chain.configured && !!this.chain.recover,
       demo: this.config.mode === 'demo' };

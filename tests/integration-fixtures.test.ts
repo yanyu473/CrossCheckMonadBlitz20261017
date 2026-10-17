@@ -13,7 +13,12 @@ test('B historical anchored fixtures preserve hashes under A shared protocol and
   vm.runInContext(await readFile(new URL('../docs/shared.js', import.meta.url), 'utf8'), context);
   for (const sample of samples) {
     const report = validateReportEnvelope(sample.report);
-    assert.equal(report.payload.mode, 'demo');
+    // 样例自 2026-10-17 起是真实调用产物，mode 记为 live；demo 仍允许，因为
+    // 页面必须能同时回放两条路径。这里守住的是"模式必须被明确标注"，不是某一种取值。
+    assert.ok(['live', 'demo'].includes(report.payload.mode), `unexpected mode ${report.payload.mode}`);
+    if (report.payload.mode === 'live') {
+      for (const model of report.payload.models) assert.equal(model.status, 'succeeded', 'live sample must carry two real answers');
+    }
     assert.equal(report.proof?.chain_id, 10143);
     const hashes = { content_hash: hashContent(report.payload.raw_text), verdict_hash: hashPayload(report.payload) };
     assert.deepEqual(hashes, legacyHashes(report.payload));

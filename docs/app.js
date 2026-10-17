@@ -40,16 +40,18 @@
     $('sampleTabs').querySelectorAll('button').forEach(button=>{button.disabled=state.verifying;});
     $('fileInput').disabled=state.verifying;
   }
-  function renderModels(models) {
+  function renderModels(models,mode) {
+    // mode 为 live 时这些报告来自真实上游调用，不能再说成"预设/非真实 API 返回"。
+    const live=mode==='live';
     $('models').replaceChildren();
     for (const [index,model] of models.entries()) {
       const card=create('article','model-card');
       const top=create('div','model-topline'), identity=create('div','model-id'), details=create('div');
       identity.append(create('div','model-letter',model.slot.toUpperCase()));
-      details.append(create('h4','', '预设模型 '+model.slot.toUpperCase()),create('p','',model.provider)); identity.append(details);
-      top.append(identity,create('span','tag','PRESET OUTPUT'));
+      details.append(create('h4','', (live?'评审模型 ':'预设模型 ')+model.slot.toUpperCase()),create('p','',model.provider)); identity.append(details);
+      top.append(identity,create('span','tag',live?'MODEL OUTPUT':'PRESET OUTPUT'));
       const verdict=verdicts[model.verdict] || {label:'调用失败',icon:'—'};
-      card.append(top,create('div','small-label','预设判断'),create('div','verdict '+(model.verdict || 'unable_to_determine'),verdict.icon+' '+verdict.label),create('p','reason-caption','演示理由 / 非真实 API 返回'),create('p','model-reason',model.reason || model.error_code || '未提供理由'),create('div','model-tech','请求模型：'+model.requested_model+'\n返回模型：'+(model.returned_model || '无')+' · 状态：'+model.status));
+      card.append(top,create('div','small-label',live?'模型判断':'预设判断'),create('div','verdict '+(model.verdict || 'unable_to_determine'),verdict.icon+' '+verdict.label),create('p','reason-caption',live?'理由 / 模型原始返回，未经编辑':'演示理由 / 非真实 API 返回'),create('p','model-reason',model.reason || model.error_code || '未提供理由'),create('div','model-tech','请求模型：'+model.requested_model+'\n返回模型：'+(model.returned_model || '无')+' · 状态：'+model.status));
       card.style.animationDelay=(index*80)+'ms'; $('models').append(card);
     }
   }
@@ -60,7 +62,7 @@
     const {payload,proof}=state.report, agreement=agreements[payload.agreement], hashes=P.computeHashes(payload);
     $('sampleTabs').querySelectorAll('button').forEach((button,position)=>{button.setAttribute('aria-selected',String(position===index));button.tabIndex=position===index ? 0 : -1;});
     text($('sampleTitle'),agreement.title); $('agreement').className='agreement '+agreement.className; text($('agreement'),agreement.label);
-    renderModels(payload.models); text($('rawText'),payload.raw_text); text($('reportTime'),'报告完成 '+date(payload.completed_at));
+    renderModels(payload.models,payload.mode); text($('rawText'),payload.raw_text); text($('reportTime'),'报告完成 '+date(payload.completed_at));
     text($('certificateId'),proof.certificate_id);text($('chainId'),proof.chain_id);text($('blockNumber'),proof.block_number);text($('blockTime'),date(Number(proof.block_time)*1000));text($('txHash'),proof.tx_hash);
     text($('contentHash'),hashes.content_hash);text($('verdictHash'),hashes.verdict_hash);
     text($('proofIdentity'),'预期合约 '+state.config.contractAddress+'\n预期提交地址 '+state.config.issuerAddress+'\n回放数据不等于已独立核验，请在下方直读 RPC 对照。');
@@ -107,7 +109,7 @@
       const block=await provider.getBlock(receipt.blockHash);
       if(!block || uint(proof.block_time,'区块时间')!==BigInt(block.timestamp) || event.timestamp!==BigInt(block.timestamp))throw new Error('报告、区块与事件时间不一致');
       if(tamperExpected)throw new Error('篡改样例意外匹配，不能作为成功的篡改检测演示');
-      message('核验通过：'+source+'的完整指纹与真实 Monad 测试网事件一致。\n链 10143 · 凭证 #'+certificate+' · 区块 '+receipt.blockNumber+'\n已检查预期合约、提交地址、交易回执、全部模型字段指纹、一致性及区块时间。\n通过只代表记录相符，不证明内容真实或真实模型调用。','success');
+      message('核验通过：'+source+'的完整指纹与真实 Monad 测试网事件一致。\n链 10143 · 凭证 #'+certificate+' · 区块 '+receipt.blockNumber+'\n已检查预期合约、提交地址、交易回执、全部模型字段指纹、一致性及区块时间。\n通过只代表"这份报告确实被签发、内容未被改动"，不代表判断本身正确。','success');
     } catch(error) {
       const reason=error?.shortMessage || error?.message || String(error);
       const detected=tamperExpected && /完整报告指纹不匹配/.test(reason);
@@ -161,7 +163,7 @@
       state.config=config;$('rpcInput').value=config.rpcUrl;
       if(!Array.isArray(rawSamples) || rawSamples.length<1)throw new Error('样例数组为空');
       state.samples=rawSamples.map(sample=>({name:String(sample.name || '演示样例'),report:reportFrom(sample.report)}));
-      for(const sample of state.samples){const proof=sample.report.proof;if(!proof || proof.chain_id!==10143 || !sameAddress(proof.contract_address,config.contractAddress) || !sameAddress(proof.issuer,config.issuerAddress) || sample.report.payload.mode!=='demo')throw new Error('预设样例身份、链或演示模式与配置不符');}
+      for(const sample of state.samples){const proof=sample.report.proof;if(!proof || proof.chain_id!==10143 || !sameAddress(proof.contract_address,config.contractAddress) || !sameAddress(proof.issuer,config.issuerAddress) || !['live','demo'].includes(sample.report.payload.mode))throw new Error('预设样例身份、链或模式与配置不符');}
       $('sampleTabs').replaceChildren();
       state.samples.forEach((sample,index)=>{const data=agreements[sample.report.payload.agreement],button=create('button','sample-tab');button.type='button';button.setAttribute('role','tab');button.setAttribute('aria-selected','false');button.append(create('span','',data.tab),create('small','',data.en));button.addEventListener('click',()=>choose(index));$('sampleTabs').append(button);});
       for(const [id,value] of [['sourceLink',config.sourceUrl],['fullServerLink',config.fullServerUrl || config.sourceUrl]]){const url=safeUrl(value);if(url){$(id).href=url.href;$(id).target='_blank';$(id).rel='noopener noreferrer';}}

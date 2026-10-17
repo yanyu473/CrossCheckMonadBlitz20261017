@@ -23,6 +23,7 @@
     "test": "node scripts/test.mjs",
     "check": "node scripts/check.mjs",
     "smoke": "tsx scripts/smoke.ts",
+    "probe": "tsx scripts/probe-models.ts",
     "fixtures:check": "tsx packages/protocol/scripts/check-fixtures.ts",
     "start:legacy": "tsx scripts/start-legacy.ts",
     "dev:legacy": "tsx watch scripts/start-legacy.ts",

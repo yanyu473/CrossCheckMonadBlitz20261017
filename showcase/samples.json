@@ -4,34 +4,34 @@
     "report": {
       "payload": {
         "schema_version": "1",
-        "job_id": "88b9005d-035a-41ef-8e77-0f5afea12d48",
-        "mode": "demo",
-        "raw_text": "演示声明：这是一份明确标注为预设演示的报告，不代表真实模型调用。",
-        "submitted_at": "2026-10-17T04:37:06.141Z",
-        "completed_at": "2026-10-17T04:37:06.861Z",
-        "rule_version": "crosscheck-review-v1",
-        "prompt_hash": "0x532609d17532d57a8629a15aadb356ae7df05e06ef8dc04e556274baf5eb8a8f",
-        "model_config_hash": "0xc4daa11762b357dbda8117b03c179a3a44e2aa20c2498f231da7f8e7bc4f7933",
+        "job_id": "f9e527a9-ab95-4f65-8a34-9323bc0c7705",
+        "mode": "live",
+        "raw_text": "地球是圆的吗",
+        "submitted_at": "2026-10-17T09:47:45.249Z",
+        "completed_at": "2026-10-17T09:47:54.194Z",
+        "rule_version": "crosscheck-v1-2026-10-17",
+        "prompt_hash": "0xfecb9509b9c33f21af43be71c8e2351b854690b45985e394c98244d89a96b96e",
+        "model_config_hash": "0x4f9be19a010c64b097f0528d8809fe6384bf1f29be40e2fd63ed8ad832657b46",
         "models": [
           {
             "slot": "a",
-            "provider": "CrossCheck 固定演示样例",
-            "requested_model": "fixed-demo-v1",
-            "returned_model": "fixed-demo-v1",
+            "provider": "vfzhi",
+            "requested_model": "gpt-6-sol",
+            "returned_model": "gpt-6-sol",
             "status": "succeeded",
-            "error_code": null,
             "verdict": "credible",
-            "reason": "这是预设的一致演示结果A，没有调用AI，也没有核查所提交内容。"
+            "reason": "是的，地球整体近似球形，更准确地说是两极略扁、赤道略鼓的椭球体，并非完美的几何球体。",
+            "error_code": null
           },
           {
             "slot": "b",
-            "provider": "CrossCheck 固定演示样例",
-            "requested_model": "fixed-demo-v1",
-            "returned_model": "fixed-demo-v1",
+            "provider": "vfzhi",
+            "requested_model": "claude-opus-5-5",
+            "returned_model": "claude-opus-5-5",
             "status": "succeeded",
-            "error_code": null,
             "verdict": "credible",
-            "reason": "这是预设的一致演示结果B，没有调用AI，也没有核查所提交内容。"
+            "reason": "地球是一个近似球体的椭球体，赤道直径略大于极地直径约43公里。这个形状被称为扁球体，是由地球自转产生的离心力造成的。地球确实是圆的（球形）。",
+            "error_code": null
           }
         ],
         "agreement": 0
@@ -39,11 +39,11 @@
       "proof": {
         "chain_id": 10143,
         "contract_address": "0x1aD4FFdE3c04b4C8daF208406957Db2dbFF45c8B",
-        "certificate_id": "2",
+        "certificate_id": "10",
         "issuer": "0xF6282e665b0a74b4cC1D9720a08c5CCcF2A22442",
-        "tx_hash": "0xefec5d8e53949c449d0a9bb4a9ef3a58b0dc76c65f6e534a3d58de9f2be4f7a3",
-        "block_number": "71727651",
-        "block_time": "1792211833"
+        "tx_hash": "0x836e2bdeda735caa4f7ef88d9c1082e5b7852a7b8c358a387ff613c543ca8842",
+        "block_number": "71789397",
+        "block_time": "1792230483"
       }
     }
   },
@@ -52,34 +52,34 @@
     "report": {
       "payload": {
         "schema_version": "1",
-        "job_id": "ed431271-f3be-4cbb-ade3-7db84dc58505",
-        "mode": "demo",
-        "raw_text": "演示声明：我们的 AI 产品准确率达到 99.9%，已服务全球 10 亿用户。",
-        "submitted_at": "2026-10-17T04:37:13.321Z",
-        "completed_at": "2026-10-17T04:37:14.034Z",
-        "rule_version": "crosscheck-review-v1",
-        "prompt_hash": "0x532609d17532d57a8629a15aadb356ae7df05e06ef8dc04e556274baf5eb8a8f",
-        "model_config_hash": "0xc9f77893ade5358f580e6b2d9148acae96e97b5e65dc57998fe12962d7086d6f",
+        "job_id": "2794eda0-5b40-4b47-8c1a-11c3a28c2337",
+        "mode": "live",
+        "raw_text": "某AI公司宣布注册用户突破一千万，说明它已经是行业领导者",
+        "submitted_at": "2026-10-17T09:49:09.039Z",
+        "completed_at": "2026-10-17T09:50:27.139Z",
+        "rule_version": "crosscheck-v1-2026-10-17",
+        "prompt_hash": "0xfecb9509b9c33f21af43be71c8e2351b854690b45985e394c98244d89a96b96e",
+        "model_config_hash": "0x4f9be19a010c64b097f0528d8809fe6384bf1f29be40e2fd63ed8ad832657b46",
         "models": [
           {
             "slot": "a",
-            "provider": "CrossCheck 固定演示样例",
-            "requested_model": "fixed-demo-v1",
-            "returned_model": "fixed-demo-v1",
+            "provider": "vfzhi",
+            "requested_model": "gpt-6-sol",
+            "returned_model": "gpt-6-sol",
             "status": "succeeded",
-            "error_code": null,
-            "verdict": "credible",
-            "reason": "这是预设的分歧演示结果A，没有调用AI，也没有核查所提交内容。"
+            "verdict": "questionable",
+            "reason": "注册用户突破一千万只能说明用户规模较大，不能单凭此断定其为行业领导者，还需比较市场份额、收入、技术实力、活跃度及行业影响力等指标。",
+            "error_code": null
           },
           {
             "slot": "b",
-            "provider": "CrossCheck 固定演示样例",
-            "requested_model": "fixed-demo-v1",
-            "returned_model": "fixed-demo-v1",
+            "provider": "vfzhi",
+            "requested_model": "claude-opus-5-5",
+            "returned_model": "claude-opus-5-5",
             "status": "succeeded",
-            "error_code": null,
-            "verdict": "questionable",
-            "reason": "这是预设的分歧演示结果B，没有调用AI，也没有核查所提交内容。"
+            "verdict": "not_credible",
+            "reason": "注册用户数量只是一个指标，不能单独证明行业领导地位。领导者地位需要综合考虑市场份额、技术创新、营收规模、用户活跃度、行业影响力等多个维度，一千万注册用户可能包含大量不活跃用户，且在AI行业中许多公司拥有更大规模。",
+            "error_code": null
           }
         ],
         "agreement": 1
@@ -87,11 +87,11 @@
       "proof": {
         "chain_id": 10143,
         "contract_address": "0x1aD4FFdE3c04b4C8daF208406957Db2dbFF45c8B",
-        "certificate_id": "3",
+        "certificate_id": "11",
         "issuer": "0xF6282e665b0a74b4cC1D9720a08c5CCcF2A22442",
-        "tx_hash": "0x84e60521833c92b5ae5b634c1cf5ba2965299d28c82492013fef2a56a33f8ab1",
-        "block_number": "71727673",
-        "block_time": "1792211839"
+        "tx_hash": "0x00a6c8a20f0dd8d61a9953479798257c79e8e4f046b35cfda9c61c5ed820dbd7",
+        "block_number": "71789913",
+        "block_time": "1792230639"
       }
     }
   },
@@ -100,34 +100,34 @@
     "report": {
       "payload": {
         "schema_version": "1",
-        "job_id": "b1079597-3b52-4dd0-a01b-89c5f7fab1c6",
-        "mode": "demo",
-        "raw_text": "演示声明：某未公开项目明年将实现显著增长，目前没有可核对的资料。",
-        "submitted_at": "2026-10-17T04:37:19.481Z",
-        "completed_at": "2026-10-17T04:37:20.192Z",
-        "rule_version": "crosscheck-review-v1",
-        "prompt_hash": "0x532609d17532d57a8629a15aadb356ae7df05e06ef8dc04e556274baf5eb8a8f",
-        "model_config_hash": "0xc36d42a8d666d154747ad4874d13dc43ee5c5877bd1fa338ef91ff6ac4589b47",
+        "job_id": "ee488b3c-3700-46d7-b256-ed7c017e050e",
+        "mode": "live",
+        "raw_text": "我手里这份文件第 7 页写了什么",
+        "submitted_at": "2026-10-17T09:51:59.721Z",
+        "completed_at": "2026-10-17T09:52:06.377Z",
+        "rule_version": "crosscheck-v1-2026-10-17",
+        "prompt_hash": "0xfecb9509b9c33f21af43be71c8e2351b854690b45985e394c98244d89a96b96e",
+        "model_config_hash": "0x4f9be19a010c64b097f0528d8809fe6384bf1f29be40e2fd63ed8ad832657b46",
         "models": [
           {
             "slot": "a",
-            "provider": "CrossCheck 固定演示样例",
-            "requested_model": "fixed-demo-v1",
-            "returned_model": "fixed-demo-v1",
+            "provider": "vfzhi",
+            "requested_model": "gpt-6-sol",
+            "returned_model": "gpt-6-sol",
             "status": "succeeded",
-            "error_code": null,
             "verdict": "unable_to_determine",
-            "reason": "这是预设的“无法判断”演示结果，没有调用AI，也没有核查所提交内容。"
+            "reason": "我看不到你提到的文件或第 7 页内容。请上传文件，或提供第 7 页的截图/文字。",
+            "error_code": null
           },
           {
             "slot": "b",
-            "provider": "CrossCheck 固定演示样例",
-            "requested_model": "fixed-demo-v1",
-            "returned_model": "fixed-demo-v1",
+            "provider": "vfzhi",
+            "requested_model": "claude-opus-5-5",
+            "returned_model": "claude-opus-5-5",
             "status": "succeeded",
-            "error_code": null,
             "verdict": "unable_to_determine",
-            "reason": "这是预设的“无法判断”演示结果，没有调用AI，也没有核查所提交内容。"
+            "reason": "我无法访问你的文件。我看不到你手中的任何文档内容，因此无法告诉你第7页写了什么。",
+            "error_code": null
           }
         ],
         "agreement": 2
@@ -135,11 +135,11 @@
       "proof": {
         "chain_id": 10143,
         "contract_address": "0x1aD4FFdE3c04b4C8daF208406957Db2dbFF45c8B",
-        "certificate_id": "4",
+        "certificate_id": "12",
         "issuer": "0xF6282e665b0a74b4cC1D9720a08c5CCcF2A22442",
-        "tx_hash": "0x264726d57f599ffe858f16dbbe77a0fe31d72efacf188fb8b89712538cfe2ca4",
-        "block_number": "71727690",
-        "block_time": "1792211844"
+        "tx_hash": "0xc68d6d68d20909a38e1be4b8a641e9f661aeef4f1c5417fddd9540853ab7da7a",
+        "block_number": "71790224",
+        "block_time": "1792230733"
       }
     }
   }

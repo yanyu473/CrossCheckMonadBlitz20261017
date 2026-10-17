@@ -4,8 +4,8 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <title>CrossCheckMonadBlitz20261017 · 项目说明与源码</title>
-  <meta name="description" content="CrossCheckMonadBlitz20261017（CrossCheck）项目说明、源码和运行边界：双模型预设样例回放、真实 Monad 测试网记录、浏览器报告核验。真实模型 API 模式尚待配置和实测。">
-  <meta name="theme-color" content="#0b1020">
+  <meta name="description" content="CrossCheckMonadBlitz20261017（CrossCheck）项目说明、源码和运行边界：双模型真实判断、真实 Monad 测试网存证、浏览器报告核验。">
+  <meta name="theme-color" content="#0a0a0c">
   <link rel="canonical" href="https://yanyu473.github.io/CrossCheckMonadBlitz20261017/about.html">
   <meta property="og:type" content="website">
   <meta property="og:locale" content="zh_CN">
@@ -17,7 +17,7 @@
   <meta name="twitter:title" content="CrossCheckMonadBlitz20261017 · 项目说明与源码">
   <meta name="twitter:description" content="双模型预设样例回放、真实 Monad 测试网报告存证及浏览器核验。公开源码与运行说明。">
   <script type="application/ld+json">
-  {"@context":"https://schema.org","@type":"AboutPage","@id":"https://yanyu473.github.io/CrossCheckMonadBlitz20261017/about.html#webpage","url":"https://yanyu473.github.io/CrossCheckMonadBlitz20261017/about.html","name":"CrossCheckMonadBlitz20261017 项目说明与源码","inLanguage":"zh-CN","isPartOf":{"@type":"WebSite","@id":"https://yanyu473.github.io/CrossCheckMonadBlitz20261017/#website","name":"CrossCheckMonadBlitz20261017","url":"https://yanyu473.github.io/CrossCheckMonadBlitz20261017/"},"about":{"@type":"SoftwareSourceCode","name":"CrossCheckMonadBlitz20261017","alternateName":"CrossCheck","codeRepository":"https://github.com/LINXIAO-LI2025/CrossCheckMonadBlitz20261017","description":"双模型审阅报告、Monad 测试网存证及浏览器独立核验。公开站点回放预设样例，未调用真实模型 API。","programmingLanguage":["TypeScript","Solidity"]}}
+  {"@context":"https://schema.org","@type":"AboutPage","@id":"https://yanyu473.github.io/CrossCheckMonadBlitz20261017/about.html#webpage","url":"https://yanyu473.github.io/CrossCheckMonadBlitz20261017/about.html","name":"CrossCheckMonadBlitz20261017 项目说明与源码","inLanguage":"zh-CN","isPartOf":{"@type":"WebSite","@id":"https://yanyu473.github.io/CrossCheckMonadBlitz20261017/#website","name":"CrossCheckMonadBlitz20261017","url":"https://yanyu473.github.io/CrossCheckMonadBlitz20261017/"},"about":{"@type":"SoftwareSourceCode","name":"CrossCheckMonadBlitz20261017","alternateName":"CrossCheck","codeRepository":"https://github.com/LINXIAO-LI2025/CrossCheckMonadBlitz20261017","description":"双模型真实判断、Monad 测试网存证及浏览器独立核验。公开站点为真实模型返回的报告回放。","programmingLanguage":["TypeScript","Solidity"]}}
   </script>
   <link rel="stylesheet" href="./styles.css">
 </head>
@@ -31,7 +31,7 @@
     <p>公开页面回放三份固定样例。样例报告已经真实写入 Monad 测试网，浏览器可以直接读取 RPC 并核对完整报告指纹。修改模型理由后，核验会失败。</p>
     <p>样例没有调用真实模型 API，也不证明内容真假。页面显著显示这个边界，不伪造厂商签名或实时审核。</p>
     <h2>完整产品包含什么</h2>
-    <p>四页前端、Express 后端、并行模型适配器、SSE 进度、持久报告、授权发证合约、完整 JSON 导出及浏览器复核。真实 API 模式需要在服务器配置两家 Key 和实际可调用的模型 ID；当前尚未配置和实测。</p>
+    <p>四页前端、Express 后端、并行模型适配器、SSE 进度、持久报告、授权发证合约、完整 JSON 导出及浏览器复核。真实 API 模式已跑通：两份判断分别由 <code>gpt-6-sol</code> 与 <code>claude-opus-5-5</code> 经同一中转网关并行返回，理由原样写入报告，三条公开样例即其中三次真实调用的产物。</p>
     <h2>为什么有完整报告指纹</h2>
     <p>报告包含原文、请求与返回模型标识、两份判断、理由、时间及规则版本。对象键递归排序，数组保序，原文不去空白；模型理由也参与 Keccak-256。指定合约只接受授权发证钱包，浏览器核对交易回执、事件、发证地址和指纹。</p>
     <h2>如何复查</h2>

@@ -18,6 +18,33 @@ function int(env: NodeJS.ProcessEnv, key: string, fallback: number, min = 1, max
   if (!Number.isSafeInteger(n) || n < min || n > max) throw new Error(`Invalid ${key}`);
   return n;
 }
+
+/**
+ * One relay, two model ids, one key. Both reviewers are the same upstream;
+ * nothing is inferred, everything comes from the environment.
+ */
+function readUpstream(env: NodeJS.ProcessEnv): ModelAdaptersConfig['upstream'] {
+  const base_url = env.MODEL_BASE_URL?.trim();
+  const api_key = env.MODEL_API_KEY?.trim();
+  const model_a = env.MODEL_A?.trim();
+  const model_b = env.MODEL_B?.trim();
+  if (!base_url && !api_key && !model_a && !model_b) return undefined;
+  if (base_url && !/^https?:\/\//i.test(base_url)) throw new Error('Invalid MODEL_BASE_URL');
+  const wire = env.MODEL_WIRE_API?.trim() || 'auto';
+  if (!['chat', 'responses', 'auto'].includes(wire)) throw new Error('Invalid MODEL_WIRE_API');
+  return {
+    base_url, api_key, model_a, model_b,
+    model_a_fallback: env.MODEL_A_FALLBACK?.trim() || undefined,
+    model_b_fallback: env.MODEL_B_FALLBACK?.trim() || undefined,
+    reasoning_effort: env.MODEL_REASONING_EFFORT?.trim() || 'minimal',
+    reasoning_effort_a: env.MODEL_A_REASONING_EFFORT?.trim() || undefined,
+    reasoning_effort_b: env.MODEL_B_REASONING_EFFORT?.trim() || undefined,
+    http_proxy: env.MODEL_HTTP_PROXY?.trim() || undefined,
+    request_timeout_ms: env.MODEL_REQUEST_TIMEOUT_MS ? int(env, 'MODEL_REQUEST_TIMEOUT_MS', 20_000, 1_000, 600_000) : undefined,
+    wire_api: wire as 'chat' | 'responses' | 'auto',
+    provider_label: env.MODEL_PROVIDER_LABEL?.trim() || 'upstream',
+  };
+}
 export async function loadConfig(env: NodeJS.ProcessEnv = process.env): Promise<ServerConfig> {
   if (env === process.env) dotenv.config({ path: resolve(ROOT, '.env'), quiet: true });
   const mode = env.MODE ?? 'demo';
@@ -53,7 +80,7 @@ export async function loadConfig(env: NodeJS.ProcessEnv = process.env): Promise<
     chain_timeout_ms: int(env, 'CHAIN_TIMEOUT_MS', 30000), recovery_interval_ms: int(env, 'RECOVERY_INTERVAL_MS', 15000),
     chain_enabled, deployment, public: publicConfig,
     rpc_url: env.MONAD_RPC_URL ?? 'https://testnet-rpc.monad.xyz', private_key: env.ISSUER_PRIVATE_KEY,
-    models: { mode, timeout_ms: int(env, 'MODEL_TIMEOUT_MS', 20000),
+    models: { mode, timeout_ms: int(env, 'MODEL_TIMEOUT_MS', 20000), upstream: readUpstream(env),
       openai: { api_key: env.OPENAI_API_KEY, model: env.OPENAI_MODEL },
       anthropic: { api_key: env.ANTHROPIC_API_KEY, model: env.ANTHROPIC_MODEL } },
   };

@@ -2,6 +2,7 @@ import express, { type NextFunction, type Request, type Response } from 'express
 import { resolve } from 'node:path';
 import QRCode from 'qrcode';
 import { AppError } from './chain.js';
+import { modelsConfigured } from './adapters.js';
 import { ROOT } from './config.js';
 import type { JobService } from './service.js';
 import type { StoredEvent } from './store.js';
@@ -109,9 +110,7 @@ export function createApp(service: JobService, options: AppOptions = {}) {
     download(res, `crosscheck-${report.payload.job_id}.json`, report);
   });
   app.get('/api/config', (_req, res) => res.json({ ...service.config.public,
-    backend_mode: 'a-integrated', live_available: !!(service.config.models.openai?.api_key?.trim() &&
-      service.config.models.openai?.model?.trim() && service.config.models.anthropic?.api_key?.trim() &&
-      service.config.models.anthropic?.model?.trim()), chain_ready: service.chain.configured,
+    backend_mode: 'a-integrated', live_available: modelsConfigured(service.config.models), chain_ready: service.chain.configured,
   }));
   app.get('/api/qr', async (req, res) => {
     const text = req.query.text;
